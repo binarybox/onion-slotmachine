@@ -1,3 +1,5 @@
+import brokoli_image from "$lib/vegetable/brokoli.jpg"
+
 
 export class Preparation {
     constructor(private _name: string) {
@@ -22,12 +24,12 @@ export class Food {
 
 export class Vegetable extends Food {
     constructor(name: string, image: string) {
-        super(name, `vegetable/${image}`)
+        super(name, image)
     }
 }
 export class Protein extends Food {
     constructor(name: string, image: string) {
-        super(name, `protein/${image}`)
+        super(name, image)
     }
 }
 
@@ -119,19 +121,19 @@ export const protein_list = [
 ]
 
 export const vegtables_list = [
-    new Vegetable("Zuchinni", "brokoli.jpg"),
-    new Vegetable("Kürbis", "brokoli.jpg"),
-    new Vegetable("Rotebeete", "brokoli.jpg"),
-    new Vegetable("Rosenkohl", "brokoli.jpg"),
-    new Vegetable("Stangenbohnen", "brokoli.jpg"),
-    new Vegetable("Mangold", "brokoli.jpg"),
-    new Vegetable("Spinat", "brokoli.jpg"),
-    new Vegetable("Brokoli", "brokoli.jpg"),
-    new Vegetable("Spitzkohl", "brokoli.jpg"),
-    new Vegetable("Pilze", "brokoli.jpg"),
-    new Vegetable("Karotten", "brokoli.jpg"),
-    new Vegetable("Paprika", "brokoli.jpg"),
-    new Vegetable("Blumenkohl", "brokoli.jpg"),
+    new Vegetable("Zuchinni", brokoli_image),
+    new Vegetable("Kürbis", brokoli_image),
+    new Vegetable("Rotebeete", brokoli_image),
+    new Vegetable("Rosenkohl", brokoli_image),
+    new Vegetable("Stangenbohnen", brokoli_image),
+    new Vegetable("Mangold", brokoli_image),
+    new Vegetable("Spinat", brokoli_image),
+    new Vegetable("Brokoli", brokoli_image),
+    new Vegetable("Spitzkohl", brokoli_image),
+    new Vegetable("Pilze", brokoli_image),
+    new Vegetable("Karotten", brokoli_image),
+    new Vegetable("Paprika", brokoli_image),
+    new Vegetable("Blumenkohl", brokoli_image),
 ]
 
 export const sauces_list = [

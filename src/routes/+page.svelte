@@ -5,7 +5,6 @@
 		base_food_list,
 		BaseFood,
 		Food,
-		Menu,
 		Preparation,
 		preparation_list,
 		protein_list,
@@ -25,7 +24,8 @@
 
 <div class="slotmachine">
 	{#if vegetable }
-		<img class="slotimage" src="/src/lib/{vegetable.image}" alt="Image" />
+	<img class="slotimage" src={vegetable.image} alt="Image" />
+		<!-- <img class="slotimage" src="/src/lib/{vegetable.image}" alt="Image" /> -->
 		<p>
 			Schneide eine Zwiebel und bereite dann etwas {base?.name} vor. {preparation?.name}
 			{spice?.name}
