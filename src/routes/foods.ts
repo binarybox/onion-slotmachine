@@ -49,6 +49,10 @@ export class Sauce {
         return this._name
     }
 
+    public get spice_list() {
+        return this._spices
+    }
+
     public random_spice_index() {
         return Math.floor(Math.random() * this._spices.length)
     }

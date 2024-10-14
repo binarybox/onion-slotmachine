@@ -77,6 +77,11 @@ input,
 button {
 	font-size: inherit;
 	font-family: inherit;
+	margin: 10px auto;
+	padding: 10px 15px;
+	border-radius: 5px;
+	box-shadow: none;
+	border: 1px solid white;
 }
 
 button:focus:not(:focus-visible) {
