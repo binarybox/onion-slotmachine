@@ -121,7 +121,7 @@ export const protein_list = [
     new Protein("Tofu", "brokoli.jpg"),
     new Protein("rote Bohnen", "brokoli.jpg"),
     new Protein("Kickererbsen", "brokoli.jpg"),
-    new Protein("Quinoa","brokoli.jpg"),
+    new Protein("Quinoa", "brokoli.jpg"),
 ]
 
 export const vegtables_list = [
@@ -140,12 +140,29 @@ export const vegtables_list = [
     new Vegetable("Blumenkohl", brokoli_image),
 ]
 
+const kreuzkuemmel = new Spice("Kreuzkümmel");
+const koriander = new Spice("Koriander");
+const mustkatnuss = new Spice("Muskatnuss");
+const zimt = new Spice("Zimt");
+const zitronensaft = new Spice("Zitronensaft");
+const thymian = new Spice("Thymian");
+const kurkuma = new Spice("Kurkuma");
+const oregano = new Spice("Oregano");
+const paprika = new Spice("Paprika");
+const lorbeerblatt = new Spice("Lorbeerblatt");
+const honig = new Spice("Honig");
+const agavendicksaft = new Spice("Agavendicksaft");
+const kuemmel = new Spice("Kümmel");
+const rosmarin = new Spice("Rosmarin");
+const chilli = new Spice("Chilli");
+
 export const sauces_list = [
-    new Sauce("Sahne", [new Spice("Kreuzkümmel"), new Spice("Muskatnuss")]),
-    new Sauce("Tomate", [new Spice("Chilli"), new Spice("Paprika")]),
-    new Sauce("Kokosnusmilch", [new Spice("Kreuzkümmel"), new Spice("Koriander")]),
-    new Sauce("Brühe", [new Spice("Kreuzkümmel"), new Spice("Koriander")]),
-    new Sauce("Nichts", [new Spice("Kreuzkümmel"), new Spice("Koriander")]),
+    new Sauce("Sahne", [kreuzkuemmel, mustkatnuss, zimt, zitronensaft, thymian, kurkuma]),
+    new Sauce("Tomate", [chilli, paprika, oregano, lorbeerblatt, honig, agavendicksaft, rosmarin]),
+    new Sauce("Kokosnusmilch", [kreuzkuemmel, koriander, chilli, mustkatnuss, zimt, kurkuma]),
+    new Sauce("Brühe", [koriander, oregano, paprika, mustkatnuss, thymian, kuemmel]),
+    new Sauce("Tomaten/Sahne", [koriander, oregano, paprika, mustkatnuss, thymian, kuemmel]),
+    new Sauce("Nichts", [kreuzkuemmel, koriander, mustkatnuss, zimt, zitronensaft, thymian, kurkuma, oregano, paprika, lorbeerblatt, honig, agavendicksaft, kuemmel, rosmarin, chilli]),
 ]
 
 export const preparation_list = [
