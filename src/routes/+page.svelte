@@ -82,7 +82,7 @@
 				spice = sauce.get_spice(menu.spice_index);
 				trigger_base(menu.base_index);
 				trigger_preparation(menu.preparation_index);
-				trigger_protein(menu.protein_images);
+				trigger_protein(menu.protein_index);
 				trigger_vegetable(menu.vegetable_index);
 				trigger_sauce(menu.sauce_index);
 				trigger_spice(menu.spice_index);
