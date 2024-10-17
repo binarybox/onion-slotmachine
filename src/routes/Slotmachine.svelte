@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let list: string[];
-	let finish_index: number;
+	let finish_index: number = 0;
 	export let loops: number;
 
 	enum Animation {
@@ -12,7 +12,8 @@
 
 	$: animated_list = [...list, list[0]];
 
-	$: spin_duration_ms = loops * 500;
+	$: spin_fast_duration_ms = 500;
+	$: spin_slow_duration_ms = 1000;
 
 	let animation: Animation = Animation.stop;
 
@@ -23,20 +24,29 @@
 			finish_index = index;
 			animate = true;
 			animation = Animation.spin_fast;
-			setTimeout(() => {
-				animation = Animation.spin_slow;
-				setTimeout(() => {
-					animation = Animation.spin_end;
-					setTimeout(() => {
-						animate = false;
-					}, index * 500);
-				}, 2000);
-			}, spin_duration_ms);
+			setTimeout(
+				() => {
+					animation = Animation.spin_slow;
+					setTimeout(
+						() => {
+							animation = Animation.spin_end;
+							setTimeout(() => {
+								animate = false;
+							}, index * 400);
+						},
+						spin_slow_duration_ms * Math.floor(loops / 2)
+					);
+				},
+				spin_fast_duration_ms * Math.ceil(loops / 2)
+			);
 		}
 	}
 </script>
 
-<div style="--list-items: {list.length}; --spin-end-index: {finish_index}" class="slotmachine">
+<div
+	style="--list-items: {list.length}; --spin-end-index: {finish_index}; --spin-fast-time: {spin_fast_duration_ms}ms; --spin-slow-time: {spin_slow_duration_ms}ms"
+	class="slotmachine"
+>
 	<div class={animation + ' slotlist'}>
 		{#each animated_list as item}
 			<div class="slotitem">
@@ -86,20 +96,20 @@
 			position: absolute;
 			&.spin_fast {
 				animation-name: spin_animation;
-				animation-duration: 500ms;
+				animation-duration: var(--spin-fast-time);
 				animation-timing-function: linear;
 				animation-iteration-count: infinite;
 			}
 			&.spin_slow {
 				animation-name: spin_animation;
-				animation-duration: 1000ms;
+				animation-duration: var(--spin-slow-time);
 				animation-timing-function: linear;
 				animation-iteration-count: infinite;
 			}
 			&.spin_end {
 				top: calc(var(--spin-end-index) * (-1 * $item_height));
 				animation-name: spin_animation_end;
-				animation-duration: calc((var(--spin-end-index) * 300ms) + 1000ms);
+				animation-duration: calc((var(--spin-end-index) * 200ms));
 				animation-timing-function: linear;
 			}
 		}

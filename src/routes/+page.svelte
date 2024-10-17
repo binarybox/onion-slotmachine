@@ -10,39 +10,39 @@
 	import type { Spice } from './spice';
 
 	const random_int = (value: number) => {
-		return Math.floor(Math.random() * value);
+		return 2 + Math.floor(Math.random() * value);
 	};
 	let carbs: Carbs | undefined;
-	let trigger_base: (_: number) => void;
+	let trigger_carbs: (_: number) => void;
 	const carb_image = carbs_list.map((item) => item.image);
-	let base_loops = random_int(10);
+	let base_loops = random_int(5);
 
 	let protein: Protein | undefined;
 	let trigger_protein: (_: number) => void;
 	const protein_images = protein_list.map((item) => item.image);
-	let protein_loops = random_int(10);
+	let protein_loops = random_int(5);
 
 	let vegetable: Vegetable | undefined;
 	let trigger_vegetable: (_: number) => void;
 	const vegetable_images = vegtables_list.map((item) => item.image);
-	let vegetable_loops = random_int(10);
+	let vegetable_loops = random_int(5);
 
 	let sauce: Sauce | undefined;
 	let trigger_sauce: (_: number) => void;
 	const sauce_images = sauces_list.map((item) => item.image);
-	let sauce_loops = random_int(10);
+	let sauce_loops = random_int(5);
 
 	let spice: Spice | undefined;
 	let trigger_spice: (_: number) => void;
 	$: spice_images = (sauce ? sauce.spice_list : sauces_list[0].spice_list).map(
 		(item) => item.image
 	);
-	let spice_loops = random_int(10);
+	let spice_loops = random_int(5);
 
 	let preparation: Preparation | undefined;
 	let trigger_preparation: (_: number) => void;
 	const preparation_images = preparation_list.map((item) => item.image);
-	let preparation_loops = random_int(10);
+	let preparation_loops = random_int(5);
 </script>
 
 <h1>Schneide eine Zwiebel</h1>
@@ -50,7 +50,7 @@
 
 <div class="slotmachine-list">
 	<div class="slotitem">
-		<Slotmachine list={carb_image} bind:trigger={trigger_base} loops={base_loops} />
+		<Slotmachine list={carb_image} bind:trigger={trigger_carbs} loops={base_loops} />
 	</div>
 	<div class="slotitem">
 		<Slotmachine list={protein_images} bind:trigger={trigger_protein} loops={protein_loops} />
@@ -86,7 +86,7 @@
 				vegetable = vegtables_list[menu.vegetable_index];
 				sauce = sauces_list[menu.sauce_index];
 				spice = sauce.get_spice(menu.spice_index);
-				trigger_base(menu.base_index);
+				trigger_carbs(menu.carbs_index);
 				trigger_preparation(menu.preparation_index);
 				trigger_protein(menu.protein_index);
 				trigger_vegetable(menu.vegetable_index);
@@ -98,9 +98,7 @@
 	}}
 	class="play-wrapper"
 >
-	<button data-key="enter" formaction="?/restart">
-		{carbs ? 'Get another menu' : 'Get menu'}
-	</button>
+	<button data-key="enter" formaction="?/restart"> </button>
 </form>
 
 <style lang="scss">
@@ -129,5 +127,15 @@
 		display: flex;
 		align-items: center;
 		width: 100%;
+	}
+
+	button {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		background-color: rgb(183, 9, 0);
+		text-shadow: 0 3px 1px rgba(122, 17, 8, 0.8);
+		box-shadow: 0 8px 0 rgb(183, 9, 0);
+		cursor: pointer;
 	}
 </style>
