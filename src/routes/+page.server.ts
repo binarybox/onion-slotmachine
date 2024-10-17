@@ -1,9 +1,9 @@
-import { Menu } from './foods';
+import { Menu } from './menu';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load = (() => {
     // const menu = new Menu()
-    
+
     // // return {
     // //     menu
     // // }
@@ -53,7 +53,7 @@ export const actions = {
     // enter: async ({ request, cookies }) => {
     //     return "stuff"
     //     // const game = new Game(cookies.get('sverdle'));
-        
+
     //     // const data = await request.formData();
     //     // const guess = data.getAll('guess') as string[];
 
@@ -63,7 +63,7 @@ export const actions = {
 
     //     // cookies.set('sverdle', game.toString(), { path: '/' });
     // },
-    
+
     restart: async () => {
         return JSON.stringify(new Menu())
         // cookies.delete('sverdle', { path: '/' });

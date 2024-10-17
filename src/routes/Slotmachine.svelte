@@ -4,10 +4,10 @@
 	export let loops: number;
 
 	enum Animation {
-		stop = "stop",
-		spin_fast = "spin_fast",
-		spin_slow = "spin_slow",
-		spin_end = "spin_end"
+		stop = 'stop',
+		spin_fast = 'spin_fast',
+		spin_slow = 'spin_slow',
+		spin_end = 'spin_end'
 	}
 
 	$: animated_list = [...list, list[0]];
@@ -21,7 +21,7 @@
 	export function trigger(index: number) {
 		if (!animate) {
 			finish_index = index;
-			animate = true
+			animate = true;
 			animation = Animation.spin_fast;
 			setTimeout(() => {
 				animation = Animation.spin_slow;
@@ -29,18 +29,18 @@
 					animation = Animation.spin_end;
 					setTimeout(() => {
 						animate = false;
-					}, index * 500)
+					}, index * 500);
 				}, 2000);
 			}, spin_duration_ms);
 		}
-	};
+	}
 </script>
 
 <div style="--list-items: {list.length}; --spin-end-index: {finish_index}" class="slotmachine">
 	<div class={animation + ' slotlist'}>
 		{#each animated_list as item}
 			<div class="slotitem">
-				{item}
+				<img src={item} alt={item} />
 			</div>
 		{/each}
 	</div>
@@ -70,6 +70,7 @@
 		width: $item_width;
 		height: $item_height;
 		overflow: hidden;
+		margin: auto;
 		.slotitem {
 			width: $item_width;
 			height: $item_height;
@@ -77,6 +78,9 @@
 			justify-content: center;
 			align-items: center;
 			background-color: white;
+			img {
+				height: 100%;
+			}
 		}
 		.slotlist {
 			position: absolute;
