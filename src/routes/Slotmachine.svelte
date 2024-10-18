@@ -1,81 +1,104 @@
 <script lang="ts">
 	export let list: string[];
 	let finish_index: number = 0;
-	export let loops: number;
+	let loops: number = 0;
+	let spin_animation_time: number = 0;
+	let item_title = '  ';
 
 	enum Animation {
 		stop = 'stop',
-		spin_fast = 'spin_fast',
-		spin_slow = 'spin_slow',
-		spin_end = 'spin_end'
+		spin = 'spin'
 	}
 
-	$: animated_list = [...list, list[0]];
+	enum Text {
+		hide = 'hide',
+		show = 'show'
+	}
 
-	$: spin_fast_duration_ms = 500;
-	$: spin_slow_duration_ms = 1000;
+	$: animated_list = Array.from({ length: loops + 1 }, () => list).flat();
+
+	$: end_top = (finish_index + loops * list.length) * (-1 * 100);
 
 	let animation: Animation = Animation.stop;
+	let text_state = Text.hide;
 
 	let animate = false;
-
-	export function trigger(index: number) {
+	export function trigger(index: number, title: string) {
 		if (!animate) {
-			finish_index = index;
 			animate = true;
-			animation = Animation.spin_fast;
-			setTimeout(
-				() => {
-					animation = Animation.spin_slow;
-					setTimeout(
-						() => {
-							animation = Animation.spin_end;
-							setTimeout(() => {
-								animate = false;
-							}, index * 400);
-						},
-						spin_slow_duration_ms * Math.floor(loops / 2)
-					);
-				},
-				spin_fast_duration_ms * Math.ceil(loops / 2)
-			);
+			finish_index = index;
+			animation = Animation.stop;
+			text_state = Text.hide;
+
+			// yanking around with these values gave us decent results.
+			// Yanking around a little bit more can make it look awesome
+			loops = 8 + Math.floor(Math.random() * 10);
+			spin_animation_time = 2000 + Math.floor(Math.random() * 5000);
+
+			setTimeout(() => {
+				item_title = title;
+			}, 200);
+
+			// block the animation
+			setTimeout(() => {
+				animate = false;
+				text_state = Text.show;
+			}, spin_animation_time);
+
+			setTimeout(() => {
+				animation = Animation.spin;
+			}, 5); // short delay is needed to reset the top position
 		}
 	}
 </script>
 
-<div
-	style="--list-items: {list.length}; --spin-end-index: {finish_index}; --spin-fast-time: {spin_fast_duration_ms}ms; --spin-slow-time: {spin_slow_duration_ms}ms"
-	class="slotmachine"
->
-	<div class={animation + ' slotlist'}>
-		{#each animated_list as item}
-			<div class="slotitem">
-				<img src={item} alt={item} />
-			</div>
-		{/each}
+<div class="slotmachine-box">
+	<div class="slottitle"><div class={text_state}>{item_title}</div></div>
+	<div
+		style="--list-items: {list.length}; --spin-animation-time: {spin_animation_time}ms; --end-top: {end_top}px;"
+		class="slotmachine-window"
+	>
+		<div class={[animation, 'slotlist'].join(' ')}>
+			{#each animated_list as item}
+				<div class="slotitem">
+					<img src={item} alt={item} />
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	$item_height: 100px;
-	$item_width: 100px;
+	$item_width: 150px;
 	@keyframes spin_animation {
 		0% {
-			top: calc((var(--list-items)) * ($item_height * -1));
+			top: calc(var(--list-items) * $item_height * -1);
 		}
 		100% {
-			top: 0px;
+			top: var(--end-top);
 		}
 	}
-	@keyframes spin_animation_end {
-		0% {
-			top: calc((var(--list-items)) * ($item_height * -1));
-		}
-		100% {
-			top: calc(var(--spin-end-index) * ($item_height * -1));
+	.slottitle {
+		padding: 5px 0;
+		font-weight: bold;
+		width: $item_width;
+		height: 19px;
+		text-align: center;
+		background-color: gold;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		& > * {
+			transition: opacity 200ms ease;
+			&.hide {
+				opacity: 0;
+			}
+			&.show {
+				opacity: 1;
+			}
 		}
 	}
-	.slotmachine {
+	.slotmachine-window {
 		position: relative;
 		width: $item_width;
 		height: $item_height;
@@ -92,25 +115,14 @@
 				height: 100%;
 			}
 		}
+
 		.slotlist {
 			position: absolute;
-			&.spin_fast {
+			&.spin {
+				top: var(--end-top);
 				animation-name: spin_animation;
-				animation-duration: var(--spin-fast-time);
-				animation-timing-function: linear;
-				animation-iteration-count: infinite;
-			}
-			&.spin_slow {
-				animation-name: spin_animation;
-				animation-duration: var(--spin-slow-time);
-				animation-timing-function: linear;
-				animation-iteration-count: infinite;
-			}
-			&.spin_end {
-				top: calc(var(--spin-end-index) * (-1 * $item_height));
-				animation-name: spin_animation_end;
-				animation-duration: calc((var(--spin-end-index) * 200ms));
-				animation-timing-function: linear;
+				animation-duration: var(--spin-animation-time);
+				animation-timing-function: ease-out;
 			}
 		}
 	}

@@ -9,40 +9,33 @@
 	import { preparation_list, type Preparation } from './preparation';
 	import type { Spice } from './spice';
 
-	const random_int = (value: number) => {
-		return 2 + Math.floor(Math.random() * value);
-	};
+	type TriggerMethod = (index: number, title: string) => void;
+
 	let carbs: Carbs | undefined;
-	let trigger_carbs: (_: number) => void;
+	let trigger_carbs: TriggerMethod;
 	const carb_image = carbs_list.map((item) => item.image);
-	let base_loops = random_int(5);
 
 	let protein: Protein | undefined;
-	let trigger_protein: (_: number) => void;
+	let trigger_protein: TriggerMethod;
 	const protein_images = protein_list.map((item) => item.image);
-	let protein_loops = random_int(5);
 
 	let vegetable: Vegetable | undefined;
-	let trigger_vegetable: (_: number) => void;
+	let trigger_vegetable: TriggerMethod;
 	const vegetable_images = vegtables_list.map((item) => item.image);
-	let vegetable_loops = random_int(5);
 
 	let sauce: Sauce | undefined;
-	let trigger_sauce: (_: number) => void;
+	let trigger_sauce: TriggerMethod;
 	const sauce_images = sauces_list.map((item) => item.image);
-	let sauce_loops = random_int(5);
 
 	let spice: Spice | undefined;
-	let trigger_spice: (_: number) => void;
+	let trigger_spice: TriggerMethod;
 	$: spice_images = (sauce ? sauce.spice_list : sauces_list[0].spice_list).map(
 		(item) => item.image
 	);
-	let spice_loops = random_int(5);
 
 	let preparation: Preparation | undefined;
-	let trigger_preparation: (_: number) => void;
+	let trigger_preparation: TriggerMethod;
 	const preparation_images = preparation_list.map((item) => item.image);
-	let preparation_loops = random_int(5);
 </script>
 
 <h1>Schneide eine Zwiebel</h1>
@@ -50,26 +43,22 @@
 
 <div class="slotmachine-list">
 	<div class="slotitem">
-		<Slotmachine list={carb_image} bind:trigger={trigger_carbs} loops={base_loops} />
+		<Slotmachine list={carb_image} bind:trigger={trigger_carbs} />
 	</div>
 	<div class="slotitem">
-		<Slotmachine list={protein_images} bind:trigger={trigger_protein} loops={protein_loops} />
+		<Slotmachine list={protein_images} bind:trigger={trigger_protein} />
 	</div>
 	<div class="slotitem">
-		<Slotmachine list={vegetable_images} bind:trigger={trigger_vegetable} loops={vegetable_loops} />
+		<Slotmachine list={vegetable_images} bind:trigger={trigger_vegetable} />
 	</div>
 	<div class="slotitem">
-		<Slotmachine list={sauce_images} bind:trigger={trigger_sauce} loops={sauce_loops} />
+		<Slotmachine list={sauce_images} bind:trigger={trigger_sauce} />
 	</div>
 	<div class="slotitem">
-		<Slotmachine list={spice_images} bind:trigger={trigger_spice} loops={spice_loops} />
+		<Slotmachine list={spice_images} bind:trigger={trigger_spice} />
 	</div>
 	<div class="slotitem">
-		<Slotmachine
-			list={preparation_images}
-			bind:trigger={trigger_preparation}
-			loops={preparation_loops}
-		/>
+		<Slotmachine list={preparation_images} bind:trigger={trigger_preparation} />
 	</div>
 </div>
 <form
@@ -86,12 +75,12 @@
 				vegetable = vegtables_list[menu.vegetable_index];
 				sauce = sauces_list[menu.sauce_index];
 				spice = sauce.get_spice(menu.spice_index);
-				trigger_carbs(menu.carbs_index);
-				trigger_preparation(menu.preparation_index);
-				trigger_protein(menu.protein_index);
-				trigger_vegetable(menu.vegetable_index);
-				trigger_sauce(menu.sauce_index);
-				trigger_spice(menu.spice_index);
+				trigger_carbs(menu.carbs_index, carbs.name);
+				trigger_preparation(menu.preparation_index, preparation.name);
+				trigger_protein(menu.protein_index, protein.name);
+				trigger_vegetable(menu.vegetable_index, vegetable.name);
+				trigger_sauce(menu.sauce_index, sauce.name);
+				trigger_spice(menu.spice_index, spice.name);
 			}
 			update({ reset: false });
 		};
@@ -113,7 +102,7 @@
 		justify-content: space-between;
 		flex-wrap: wrap;
 		width: 100%;
-		max-width: 300px;
+		max-width: 350px;
 		margin: auto;
 		.slotitem {
 			width: calc(50% - 50px);
