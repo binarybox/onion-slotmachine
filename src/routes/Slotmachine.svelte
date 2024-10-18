@@ -15,9 +15,9 @@
 		show = 'show'
 	}
 
-	$: animated_list = Array.from({ length: loops + 1 }, () => list).flat();
+	$: animated_list = Array.from({ length: loops + 2 }, () => list).flat();
 
-	$: end_top = (finish_index + loops * list.length) * (-1 * 100);
+	$: end_top = (finish_index + loops * list.length) * (-1 * 75);
 
 	let animation: Animation = Animation.stop;
 	let text_state = Text.hide;
@@ -32,8 +32,9 @@
 
 			// yanking around with these values gave us decent results.
 			// Yanking around a little bit more can make it look awesome
-			loops = 8 + Math.floor(Math.random() * 10);
-			spin_animation_time = 2000 + Math.floor(Math.random() * 5000);
+			console.log(Math.floor(11 / list.length));
+			loops = 1 + Math.floor(11 / list.length) + Math.floor(Math.random() * 3);
+			spin_animation_time = 3000 + Math.floor(Math.random() * ((11 / list.length) * 1000));
 
 			setTimeout(() => {
 				item_title = title;
@@ -69,8 +70,8 @@
 </div>
 
 <style lang="scss">
-	$item_height: 100px;
-	$item_width: 150px;
+	$item_height: 75px;
+	$item_width: 100px;
 	@keyframes spin_animation {
 		0% {
 			top: calc(var(--list-items) * $item_height * -1);
@@ -88,7 +89,7 @@
 	.slottitle {
 		padding: 5px 0;
 		font-weight: bold;
-		width: $item_width;
+		width: 150px;
 		height: 19px;
 		text-align: center;
 		& > * {
@@ -104,10 +105,31 @@
 	.slotmachine-window {
 		position: relative;
 		width: $item_width;
-		height: $item_height;
+		height: $item_height * 2;
 		overflow: hidden;
 		margin: auto;
+		&::before {
+			display: block;
+			content: '';
+			position: absolute;
+			height: 40px;
+			width: 100px;
+			background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(96, 96, 96, 0.7) 100%);
+			z-index: 99;
+			top: 0;
+		}
+		&::after {
+			display: block;
+			content: '';
+			position: absolute;
+			height: 40px;
+			width: 100px;
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(96, 96, 96, 0.7) 100%);
+			z-index: 99;
+			bottom: 0;
+		}
 		.slotitem {
+			transform: translateY($item_height / 2);
 			width: $item_width;
 			height: $item_height;
 			display: flex;
@@ -121,6 +143,9 @@
 
 		.slotlist {
 			position: absolute;
+			&.stop {
+				top: calc($item_height * -1);
+			}
 			&.spin {
 				top: var(--end-top);
 				animation-name: spin_animation;

@@ -102,7 +102,7 @@
 		justify-content: space-between;
 		flex-wrap: wrap;
 		width: 100%;
-		max-width: 400px;
+		max-width: 350px;
 		margin: auto;
 		.slotitem {
 			width: calc(50% - 20px);
