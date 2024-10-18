@@ -102,14 +102,14 @@
 		justify-content: space-between;
 		flex-wrap: wrap;
 		width: 100%;
-		max-width: 350px;
+		max-width: 400px;
 		margin: auto;
 		.slotitem {
-			width: calc(50% - 50px);
+			width: calc(50% - 20px);
 			align-items: center;
 			align-content: center;
 			display: flex;
-			padding: 25px;
+			padding: 10px;
 		}
 	}
 	.play-wrapper {

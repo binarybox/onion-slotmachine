@@ -79,15 +79,18 @@
 			top: var(--end-top);
 		}
 	}
+	.slotmachine-box {
+		background-color: gold;
+		border-radius: 5px;
+		padding: 6px;
+		margin: auto;
+	}
 	.slottitle {
 		padding: 5px 0;
 		font-weight: bold;
 		width: $item_width;
 		height: 19px;
 		text-align: center;
-		background-color: gold;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
 		& > * {
 			transition: opacity 200ms ease;
 			&.hide {
@@ -112,7 +115,7 @@
 			align-items: center;
 			background-color: white;
 			img {
-				height: 100%;
+				height: calc(100% - 20px);
 			}
 		}
 
